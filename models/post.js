@@ -1,26 +1,29 @@
 import { sequelize } from "../db.js";
 import Sequelize from "sequelize";
-import { Post } from "./post.js";
 
-export const User = sequelize.define("users", {
+export const Post = sequelize.define("posts", {
   id: {
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
     type: Sequelize.INTEGER,
   },
-  name: {
+  author: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  email: {
+  postText: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  password: {
+  picturePost: {
     type: Sequelize.STRING,
     allowNull: false,
+    defaultValue: "",
+  },
+  countLikes: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   },
 });
-User.hasMany(Post);
-Post.belongsTo(User);

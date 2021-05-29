@@ -46,5 +46,13 @@ class UserController {
       console.log(error);
     }
   }
+  async getUsers(req, res) {
+    try {
+      const users = await User.findAll();
+      res.json({ data: users });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 export default new UserController();
