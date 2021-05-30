@@ -1,6 +1,7 @@
 import { User } from "../models/user.js";
 import bcrypt from "bcrypt";
 import { generateJwt } from "../utils/generateJwt.js";
+import { Post } from "../models/post.js";
 class UserController {
   async register(req, res) {
     try {
@@ -46,10 +47,28 @@ class UserController {
       console.log(error);
     }
   }
-  async getUsers(req, res) {
+  async getAllUsers(req, res) {
     try {
       const users = await User.findAll();
       res.json({ data: users });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getUser(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await User.findOne({ where: { id: id } });
+      if (!user) {
+        res.json({ message: "Not Found User" });
+      }
+      const postsUser = await Post.findAll({ where: { userId: user.id } });
+      if (!postsUser) {
+        res.json({ message: "Posts user not found" });
+      }
+      res
+        .status(200)
+        .json({ message: "user Found", data: { user, postsUser } });
     } catch (error) {
       console.log(error);
     }

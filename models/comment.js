@@ -1,8 +1,7 @@
 import { sequelize } from "../db.js";
-import { Comment } from "./comment.js";
 import Sequelize from "sequelize";
 
-export const Post = sequelize.define("posts", {
+export const Comment = sequelize.define("comments", {
   id: {
     primaryKey: true,
     autoIncrement: true,
@@ -13,20 +12,13 @@ export const Post = sequelize.define("posts", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  postText: {
+  commentText: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  picturePost: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: "",
-  },
-  countLikes: {
+  countCommentsLikes: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,
   },
 });
-Post.hasMany(Comment);
-Comment.belongsTo(Post);

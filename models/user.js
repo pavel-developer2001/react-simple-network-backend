@@ -1,6 +1,7 @@
 import { sequelize } from "../db.js";
 import Sequelize from "sequelize";
 import { Post } from "./post.js";
+import { Comment } from "./comment.js";
 
 export const User = sequelize.define("users", {
   id: {
@@ -24,3 +25,6 @@ export const User = sequelize.define("users", {
 });
 User.hasMany(Post);
 Post.belongsTo(User);
+
+User.hasMany(Comment);
+Comment.belongsTo(User);

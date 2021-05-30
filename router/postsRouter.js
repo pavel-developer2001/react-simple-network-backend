@@ -3,5 +3,6 @@ import PostController from "../controllers/PostController.js";
 const router = new Router();
 
 router.post("/create", PostController.createNewPost);
-router.get("/", PostController.getPosts);
+router.get("/", PostController.getAllPosts);
+router.get("/:id", PostController.getPost);
 export { router };
