@@ -35,16 +35,15 @@ class CommentController {
   }
   async deleteComment(req, res) {
     try {
-      const { id } = req.params;
-      const { userId } = req.query;
+      const { commentId } = req.query;
       const comment = await Comment.findOne({
-        where: { postId: id, userId: userId },
+        where: { id: commentId },
       });
       if (!comment) {
         throw new Error("Вы пытаетесь удалить несуществующий комментарий");
       }
       const removeComment = await Comment.destroy({
-        where: { id: comment.id },
+        where: { id: commentId },
       });
       res
         .status(200)

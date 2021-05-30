@@ -4,6 +4,6 @@ const router = new Router();
 
 router.post("/create", CommentController.createNewComment);
 router.get("/:id", CommentController.getAllCommentsPost);
-router.delete("/:id", CommentController.deleteComment);
+router.delete("/", CommentController.deleteComment);
 
 export { router };
