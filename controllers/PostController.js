@@ -1,4 +1,5 @@
 import { Post } from "../models/post.js";
+import { Comment } from "../models/comment.js";
 
 class PostController {
   async createNewPost(req, res) {
@@ -33,7 +34,10 @@ class PostController {
       if (!post) {
         res.status(404).json({ message: "Post not found" });
       }
-      res.status(200).json({ message: "post found", data: post });
+      const commentsPost = await Comment.findAll({ where: { postId: id } });
+      res
+        .status(200)
+        .json({ message: "post found", data: { post, commentsPost } });
     } catch (error) {
       console.log(error);
     }
