@@ -1,46 +1,40 @@
 import { sequelize } from "../db.js";
 import Sequelize from "sequelize";
-import { Post } from "./post.js";
-import { Comment } from "./comment.js";
-import { Group } from "./group.js";
 import { GroupMember } from "./groupMember.js";
 import { GroupPost } from "./groupPost.js";
 import { GroupComment } from "./groupComment.js";
 
-export const User = sequelize.define("users", {
+export const Group = sequelize.define("groups", {
   id: {
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
     type: Sequelize.INTEGER,
   },
-  name: {
+  titleGroup: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  email: {
+  description: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  password: {
+  creatorGroup: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  pictureGroup: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: "",
   },
 });
-User.hasMany(Post);
-Post.belongsTo(User);
 
-User.hasMany(Comment);
-Comment.belongsTo(User);
+Group.hasMany(GroupMember);
+GroupMember.belongsTo(Group);
 
-User.hasMany(Group);
-Group.belongsTo(User);
+Group.hasMany(GroupPost);
+GroupPost.belongsTo(Group);
 
-User.hasMany(GroupMember);
-GroupMember.belongsTo(User);
-
-User.hasMany(GroupPost);
-GroupPost.belongsTo(User);
-
-User.hasMany(GroupComment);
-GroupComment.belongsTo(User);
+Group.hasMany(GroupComment);
+GroupComment.belongsTo(Group);
