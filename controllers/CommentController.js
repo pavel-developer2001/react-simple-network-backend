@@ -45,9 +45,10 @@ class CommentController {
       const removeComment = await Comment.destroy({
         where: { id: commentId },
       });
-      res
-        .status(200)
-        .json({ message: "Комментарий удалён", data: { removeComment } });
+      res.status(200).json({
+        message: "Комментарий удалён",
+        data: { removeComment, commentId },
+      });
     } catch (error) {
       console.log(error);
     }
