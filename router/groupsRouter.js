@@ -9,6 +9,8 @@ router.use("/members", groupMembersRouter);
 router.use("/posts", groupPostsRouter);
 router.use("/comments", groupCommentsRouter);
 
-router.get("/", GroupController.test);
+router.get("/", GroupController.getGroups);
+router.get("/:id", GroupController.getGroup);
+router.post("/create", GroupController.createGroup);
 
 export { router };
