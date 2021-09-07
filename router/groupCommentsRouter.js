@@ -2,5 +2,6 @@ import Router from "express";
 import GroupCommentController from "../controllers/GroupCommentController.js";
 const router = new Router();
 
-router.get("/", GroupCommentController.test);
+router.post("/create", GroupCommentController.createNewGroupComment);
+router.get("/:id", GroupCommentController.getCommentsGroupPost);
 export { router };
