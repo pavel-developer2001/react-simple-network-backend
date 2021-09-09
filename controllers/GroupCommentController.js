@@ -3,18 +3,10 @@ import { GroupComment } from "../models/groupComment.js";
 class GroupCommentController {
   async createNewGroupComment(req, res) {
     try {
-      const {
-        author,
-        commentText,
-        groupMemberId,
-        groupPostId,
-        groupId,
-        userId,
-      } = req.body;
+      const { author, commentText, groupPostId, groupId, userId } = req.body;
       const newGroupComment = await GroupComment.create({
         author,
         commentText,
-        groupMemberId,
         groupPostId,
         groupId,
         userId,

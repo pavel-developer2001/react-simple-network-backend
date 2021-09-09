@@ -20,5 +20,5 @@ export const GroupMember = sequelize.define("group-members", {
   },
 });
 
-GroupMember.hasMany(GroupComment);
-GroupComment.belongsTo(GroupMember);
+// GroupMember.hasMany(GroupComment);
+// GroupComment.belongsTo(GroupMember);
