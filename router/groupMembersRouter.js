@@ -4,4 +4,5 @@ const router = new Router();
 
 router.post("/sign", GroupMemberController.signed);
 router.delete("/unsubscribe", GroupMemberController.unsubscribe);
+router.get("/check", GroupMemberController.checkSign);
 export { router };

@@ -36,5 +36,17 @@ class GroupMemberController {
         .json({ message: "Пользователь отписался ", data: findMember });
     } catch (error) {}
   }
+  async checkSign(req, res) {
+    try {
+      const { groupId, userId } = req.query;
+      const findMember = await GroupMember.findAll({
+        where: { groupId, userId },
+      });
+      if (findMember.length > 0) {
+        res.json(true);
+      }
+      res.json(false);
+    } catch (error) {}
+  }
 }
 export default new GroupMemberController();
