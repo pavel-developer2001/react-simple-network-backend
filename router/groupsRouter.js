@@ -12,5 +12,7 @@ router.use("/comments", groupCommentsRouter);
 router.get("/", GroupController.getGroups);
 router.get("/:id", GroupController.getGroup);
 router.post("/create", GroupController.createGroup);
+router.delete("/:id", GroupController.removeGroup);
+router.put("/edit", GroupController.editGroup);
 
 export { router };

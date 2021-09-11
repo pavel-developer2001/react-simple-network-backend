@@ -69,12 +69,9 @@ class PostController {
       res.status(200).json({ message: "Пост обнавлён", data: foundPost });
     } catch (error) {}
   }
-  async active(req, res) {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAA", req.query);
+  async checkLike(req, res) {
     try {
       const { postId, userId } = req.query;
-
-      console.log("AAAFFFFFFFFFFF", postId, userId);
       const foundInDB = await LikedPosts.findAll({ where: { postId, userId } });
       if (foundInDB.length > 0) {
         res.json(true);
@@ -83,6 +80,28 @@ class PostController {
     } catch (error) {
       console.log(error);
     }
+  }
+  async removePost(req, res) {
+    try {
+      const { id } = req.params;
+      const foundPost = await Post.findOne({ where: { id } });
+      await Comment.destroy({ where: { postId: id } });
+      await Post.destroy({ where: { id } });
+
+      res.status(200).json({ message: "Пост удалён", data: foundPost });
+    } catch (error) {}
+  }
+  async editPost(req, res) {
+    try {
+      const { postId, postText } = req.body;
+      const editedPost = await Post.update(
+        { postText },
+        { where: { id: postId } }
+      );
+      const foundPost = await Post.findOne({ where: { id: postId } });
+
+      res.status(200).json({ message: "Пост обновлён!", data: foundPost });
+    } catch (error) {}
   }
 }
 export default new PostController();

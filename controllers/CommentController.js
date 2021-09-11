@@ -53,5 +53,18 @@ class CommentController {
       console.log(error);
     }
   }
+  async editComment(req, res) {
+    try {
+      const { commentId, commentText } = req.body;
+      const updateComment = await Comment.update(
+        { commentText },
+        { where: { id: commentId } }
+      );
+      const foundComment = await Comment.findOne({ where: { id: commentId } });
+      res
+        .status(200)
+        .json({ message: "Комментарий обновлён", data: foundComment });
+    } catch (error) {}
+  }
 }
 export default new CommentController();

@@ -1,3 +1,4 @@
+import { GroupComment } from "../models/groupComment.js";
 import { GroupPost } from "../models/groupPost.js";
 
 class GroupPostController {
@@ -40,6 +41,29 @@ class GroupPostController {
       res
         .status(200)
         .json({ message: "Данный пост сообщества получен", data: groupPost });
+    } catch (error) {}
+  }
+  async editGroupPost(req, res) {
+    try {
+      const { groupPostId, groupPostText } = req.body;
+      await GroupPost.update({ groupPostText }, { where: { id: groupPostId } });
+      const foundPostGroup = await GroupPost.findOne({
+        where: { id: groupPostId },
+      });
+      res
+        .status(200)
+        .json({ message: "Пост сообщества удалён", data: foundPostGroup });
+    } catch (error) {}
+  }
+  async removeGroupPost(req, res) {
+    try {
+      const { id } = req.params;
+      const foundGroupPost = await GroupPost.findOne({ where: { id } });
+      await GroupComment.destroy({ where: { groupPostId: id } });
+      await GroupPost.destroy({ where: { id } });
+      res
+        .status(200)
+        .json({ message: "Пост сообщества был удалён!", data: foundGroupPost });
     } catch (error) {}
   }
 }

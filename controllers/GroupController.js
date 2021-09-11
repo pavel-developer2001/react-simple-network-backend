@@ -1,5 +1,7 @@
 import { Group } from "../models/group.js";
+import { GroupComment } from "../models/groupComment.js";
 import { GroupMember } from "../models/groupMember.js";
+import { GroupPost } from "../models/groupPost.js";
 
 class GroupController {
   async createGroup(req, res) {
@@ -47,6 +49,36 @@ class GroupController {
       message: "Данные сообщества получены",
       data: { group, groupMembers },
     });
+  }
+  async editGroup(req, res) {
+    try {
+      const { groupId, titleGroup, description } = req.body;
+      const editedGroup = await Group.update(
+        { titleGroup, description },
+        { where: { id: groupId } }
+      );
+      const foundGroup = await Group.findOne({ where: { id: groupId } });
+      res.status(200).json({ message: "Группа обновлена", data: foundGroup });
+    } catch (error) {}
+  }
+  async removeGroup(req, res) {
+    try {
+      const { id } = req.params;
+      const foundGroup = await Group.findOne({ where: { id } });
+      await Group.destroy({ where: { id } });
+      await GroupMember.destroy({
+        where: { groupId: id },
+      });
+      await GroupComment.destroy({
+        where: { groupId: id },
+      });
+      await GroupPost.destroy({
+        where: { groupId: id },
+      });
+      res
+        .status(200)
+        .json({ message: "Сообщество было удалено!", data: foundGroup });
+    } catch (error) {}
   }
 }
 export default new GroupController();

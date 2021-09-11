@@ -33,5 +33,34 @@ class GroupCommentController {
       });
     } catch (error) {}
   }
+  async editGroupPostComments(req, res) {
+    try {
+      const { groupCommentId, commentText } = req.body;
+      await GroupComment.update(
+        { commentText },
+        { where: { id: groupCommentId } }
+      );
+      const foundCommentGroup = await GroupComment.findOne({
+        where: { id: groupCommentId },
+      });
+      res.status(200).json({
+        message: "Комментарий поста группы был удалён",
+        data: foundCommentGroup,
+      });
+    } catch (error) {}
+  }
+  async removeGroupComment(req, res) {
+    try {
+      const { id } = req.params;
+      const foundComment = await GroupComment.findOne({ where: { id } });
+      await GroupComment.destroy({ where: { id } });
+      res
+        .status(200)
+        .json({
+          message: "Комментарий поста сообщества был удалён",
+          data: foundComment,
+        });
+    } catch (error) {}
+  }
 }
 export default new GroupCommentController();
