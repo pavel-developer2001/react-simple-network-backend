@@ -5,7 +5,7 @@
 ## В разработке применяется:
 - Node js
 - Express
-- Sequelize, PostgreSQ
+- Sequelize, PostgreSQL
 
 ## Установка
 - 1 Надо установить все пакеты:
