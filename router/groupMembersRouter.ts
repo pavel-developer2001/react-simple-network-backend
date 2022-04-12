@@ -1,6 +1,6 @@
 import Router from "express";
 import GroupMemberController from "../controllers/GroupMemberController.js";
-const router = new Router();
+const router = Router();
 
 router.post("/sign", GroupMemberController.signed);
 router.delete("/unsubscribe", GroupMemberController.unsubscribe);

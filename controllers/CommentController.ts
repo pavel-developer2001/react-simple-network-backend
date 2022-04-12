@@ -1,7 +1,8 @@
+import { Request, Response } from "express";
 import { Comment } from "../models/comment.js";
 
 class CommentController {
-  async createNewComment(req, res) {
+  async createNewComment(req: Request, res: Response): Promise<void> {
     try {
       const { author, commentText, postId, userId } = req.body;
       if (commentText === "") {
@@ -19,7 +20,7 @@ class CommentController {
       console.log(error);
     }
   }
-  async getAllCommentsPost(req, res) {
+  async getAllCommentsPost(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const comments = await Comment.findAll({ where: { postId: id } });
@@ -33,7 +34,7 @@ class CommentController {
       console.log(error);
     }
   }
-  async deleteComment(req, res) {
+  async deleteComment(req: Request, res: Response): Promise<void> {
     try {
       const { commentId } = req.query;
       const comment = await Comment.findOne({
@@ -53,7 +54,7 @@ class CommentController {
       console.log(error);
     }
   }
-  async editComment(req, res) {
+  async editComment(req: Request, res: Response): Promise<void> {
     try {
       const { commentId, commentText } = req.body;
       const updateComment = await Comment.update(

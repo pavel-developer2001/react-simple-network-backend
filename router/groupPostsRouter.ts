@@ -1,6 +1,6 @@
 import Router from "express";
 import GroupPostController from "../controllers/GroupPostController.js";
-const router = new Router();
+const router = Router();
 
 router.post("/create", GroupPostController.createNewGroupPost);
 router.get("/:id", GroupPostController.getGroupPosts);

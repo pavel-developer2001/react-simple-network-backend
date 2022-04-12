@@ -1,8 +1,9 @@
+import { Request, Response } from "express";
 import { GroupComment } from "../models/groupComment.js";
 import { GroupPost } from "../models/groupPost.js";
 
 class GroupPostController {
-  async createNewGroupPost(req, res) {
+  async createNewGroupPost(req: Request, res: Response): Promise<void> {
     try {
       const { groupPostText, groupPostAuthor, groupId, userId } = req.body;
       if (!groupPostText) {
@@ -20,7 +21,7 @@ class GroupPostController {
         .json({ message: "Новый пост группы создан!!", data: newGroupPost });
     } catch (error) {}
   }
-  async getGroupPosts(req, res) {
+  async getGroupPosts(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const groupPosts = await GroupPost.findAll({
@@ -31,7 +32,7 @@ class GroupPostController {
         .json({ message: "Все посты сообщетсва получены", data: groupPosts });
     } catch (error) {}
   }
-  async getGroupPost(req, res) {
+  async getGroupPost(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const groupPost = await GroupPost.findOne({ where: { id: id } });
@@ -43,7 +44,7 @@ class GroupPostController {
         .json({ message: "Данный пост сообщества получен", data: groupPost });
     } catch (error) {}
   }
-  async editGroupPost(req, res) {
+  async editGroupPost(req: Request, res: Response): Promise<void> {
     try {
       const { groupPostId, groupPostText } = req.body;
       await GroupPost.update({ groupPostText }, { where: { id: groupPostId } });
@@ -55,7 +56,7 @@ class GroupPostController {
         .json({ message: "Пост сообщества удалён", data: foundPostGroup });
     } catch (error) {}
   }
-  async removeGroupPost(req, res) {
+  async removeGroupPost(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const foundGroupPost = await GroupPost.findOne({ where: { id } });

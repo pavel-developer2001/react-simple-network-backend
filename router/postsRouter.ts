@@ -1,6 +1,6 @@
 import Router from "express";
 import PostController from "../controllers/PostController.js";
-const router = new Router();
+const router = Router();
 
 router.post("/create", PostController.createNewPost);
 router.get("/check", PostController.checkLike);

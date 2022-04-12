@@ -1,16 +1,17 @@
+import { Request, Response } from "express";
 import { Group } from "../models/group.js";
 import { GroupComment } from "../models/groupComment.js";
 import { GroupMember } from "../models/groupMember.js";
 import { GroupPost } from "../models/groupPost.js";
 
 class GroupController {
-  async createGroup(req, res) {
+  async createGroup(req: Request, res: Response): Promise<void> {
     try {
       const { titleGroup, description, creatorGroup, userId } = req.body;
       if (!titleGroup) {
         res.json({ message: "Вы не ввели название сообщества" });
       }
-      const newGroup = await Group.create({
+      const newGroup: any = await Group.create({
         titleGroup,
         description,
         creatorGroup,
@@ -33,15 +34,15 @@ class GroupController {
       });
     } catch (error) {}
   }
-  async getGroups(req, res) {
+  async getGroups(req: Request, res: Response): Promise<void> {
     try {
       const groups = await Group.findAll();
       res.json({ message: "Список сообщест получен", data: groups });
     } catch (error) {}
   }
-  async getGroup(req, res) {
+  async getGroup(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    const group = await Group.findOne({ where: { id: id } });
+    const group: any = await Group.findOne({ where: { id: id } });
     const groupMembers = await GroupMember.findAll({
       where: { groupId: group.id },
     });
@@ -50,7 +51,7 @@ class GroupController {
       data: { group, groupMembers },
     });
   }
-  async editGroup(req, res) {
+  async editGroup(req: Request, res: Response): Promise<void> {
     try {
       const { groupId, titleGroup, description } = req.body;
       const editedGroup = await Group.update(
@@ -61,7 +62,7 @@ class GroupController {
       res.status(200).json({ message: "Группа обновлена", data: foundGroup });
     } catch (error) {}
   }
-  async removeGroup(req, res) {
+  async removeGroup(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const foundGroup = await Group.findOne({ where: { id } });

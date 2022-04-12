@@ -1,7 +1,8 @@
+import { Request, Response } from "express";
 import { GroupComment } from "../models/groupComment.js";
 
 class GroupCommentController {
-  async createNewGroupComment(req, res) {
+  async createNewGroupComment(req: Request, res: Response): Promise<void> {
     try {
       const { author, commentText, groupPostId, groupId, userId } = req.body;
       const newGroupComment = await GroupComment.create({
@@ -18,7 +19,7 @@ class GroupCommentController {
       });
     } catch (error) {}
   }
-  async getCommentsGroupPost(req, res) {
+  async getCommentsGroupPost(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const groupPostComments = await GroupComment.findAll({
@@ -33,7 +34,7 @@ class GroupCommentController {
       });
     } catch (error) {}
   }
-  async editGroupPostComments(req, res) {
+  async editGroupPostComments(req: Request, res: Response): Promise<void> {
     try {
       const { groupCommentId, commentText } = req.body;
       await GroupComment.update(
@@ -49,17 +50,15 @@ class GroupCommentController {
       });
     } catch (error) {}
   }
-  async removeGroupComment(req, res) {
+  async removeGroupComment(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const foundComment = await GroupComment.findOne({ where: { id } });
       await GroupComment.destroy({ where: { id } });
-      res
-        .status(200)
-        .json({
-          message: "Комментарий поста сообщества был удалён",
-          data: foundComment,
-        });
+      res.status(200).json({
+        message: "Комментарий поста сообщества был удалён",
+        data: foundComment,
+      });
     } catch (error) {}
   }
 }
