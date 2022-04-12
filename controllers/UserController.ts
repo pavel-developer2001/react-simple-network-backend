@@ -1,9 +1,10 @@
 import { User } from "../models/user.js";
+import {Request, Response} from 'express'
 import bcrypt from "bcrypt";
 import { generateJwt } from "../utils/generateJwt.js";
 import { Post } from "../models/post.js";
 class UserController {
-  async register(req, res) {
+  async register(req: Request , res:Response) {
     try {
       const { name, email, password, password2 } = req.body;
       if (password != password2) {

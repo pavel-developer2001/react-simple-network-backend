@@ -3,6 +3,7 @@ import { router as usersRouter } from "./usersRouter.js";
 import { router as postsRouter } from "./postsRouter.js";
 import { router as commentsRouter } from "./commentsRouter.js";
 import { router as groupsRouter } from "./groupsRouter.js";
+//@ts-ignore
 const router = new Router();
 
 router.use("/users", usersRouter);
