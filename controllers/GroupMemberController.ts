@@ -1,7 +1,8 @@
+import { Request, Response } from "express";
 import { GroupMember } from "../models/groupMember.js";
 
 class GroupMemberController {
-  async signed(req, res) {
+  async signed(req: Request, res: Response): Promise<void> {
     try {
       const { nameMember, groupId, userId } = req.body;
       const candidate = await GroupMember.findOne({
@@ -21,7 +22,7 @@ class GroupMemberController {
         .json({ message: "Пользователь подписан", data: newMember });
     } catch (error) {}
   }
-  async unsubscribe(req, res) {
+  async unsubscribe(req: Request, res: Response): Promise<void> {
     try {
       console.log("REE", req);
       const { groupId, userId } = req.query;
@@ -36,7 +37,7 @@ class GroupMemberController {
         .json({ message: "Пользователь отписался ", data: findMember });
     } catch (error) {}
   }
-  async checkSign(req, res) {
+  async checkSign(req: Request, res: Response): Promise<void> {
     try {
       const { groupId, userId } = req.query;
       const findMember = await GroupMember.findAll({

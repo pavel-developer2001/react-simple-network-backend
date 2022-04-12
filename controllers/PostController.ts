@@ -1,9 +1,10 @@
+import { Request, Response } from "express";
 import { Post } from "../models/post.js";
 import { Comment } from "../models/comment.js";
 import { LikedPosts } from "../models/likedPosts.js";
 
 class PostController {
-  async createNewPost(req, res) {
+  async createNewPost(req: Request, res: Response): Promise<void> {
     try {
       const { author, postText, userId } = req.body;
       if (postText == "") {
@@ -20,7 +21,7 @@ class PostController {
       console.log(error);
     }
   }
-  async getAllPosts(req, res) {
+  async getAllPosts(req: Request, res: Response): Promise<void> {
     try {
       const posts = await Post.findAll();
       res.json({ data: posts });
@@ -28,7 +29,7 @@ class PostController {
       console.log(error);
     }
   }
-  async getPost(req, res) {
+  async getPost(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const post = await Post.findOne({ where: { id: id } });
@@ -44,7 +45,7 @@ class PostController {
     }
   }
 
-  async liked(req, res) {
+  async liked(req: Request, res: Response): Promise<void> {
     try {
       const { postId, userId, newCountLikes } = req.body;
       const updatePost = await Post.update(
@@ -57,7 +58,7 @@ class PostController {
       res.status(200).json({ message: "Пост обнавлён", data: foundPost });
     } catch (error) {}
   }
-  async disliked(req, res) {
+  async disliked(req: Request, res: Response): Promise<void> {
     try {
       const { postId, userId, newCountLikes } = req.body;
       const updatePost = await Post.update(
@@ -69,7 +70,7 @@ class PostController {
       res.status(200).json({ message: "Пост обнавлён", data: foundPost });
     } catch (error) {}
   }
-  async checkLike(req, res) {
+  async checkLike(req: Request, res: Response): Promise<void> {
     try {
       const { postId, userId } = req.query;
       const foundInDB = await LikedPosts.findAll({ where: { postId, userId } });
@@ -81,7 +82,7 @@ class PostController {
       console.log(error);
     }
   }
-  async removePost(req, res) {
+  async removePost(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const foundPost = await Post.findOne({ where: { id } });
@@ -91,7 +92,7 @@ class PostController {
       res.status(200).json({ message: "Пост удалён", data: foundPost });
     } catch (error) {}
   }
-  async editPost(req, res) {
+  async editPost(req: Request, res: Response): Promise<void> {
     try {
       const { postId, postText } = req.body;
       const editedPost = await Post.update(

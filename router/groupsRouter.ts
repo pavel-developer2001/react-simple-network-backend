@@ -3,7 +3,7 @@ import GroupController from "../controllers/GroupController.js";
 import { router as groupMembersRouter } from "./groupMembersRouter.js";
 import { router as groupPostsRouter } from "./groupPostsRouter.js";
 import { router as groupCommentsRouter } from "./groupCommentsRouter.js";
-const router = new Router();
+const router = Router();
 
 router.use("/members", groupMembersRouter);
 router.use("/posts", groupPostsRouter);

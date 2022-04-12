@@ -1,9 +1,10 @@
 import { User } from "../models/user.js";
+import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { generateJwt } from "../utils/generateJwt.js";
 import { Post } from "../models/post.js";
 class UserController {
-  async register(req, res) {
+  async register(req: Request, res: Response): Promise<void> {
     try {
       const { name, email, password, password2 } = req.body;
       if (password != password2) {
@@ -11,10 +12,10 @@ class UserController {
       }
       const candidate = await User.findOne({ where: { email: email } });
       if (candidate) {
-        res.status.json({ message: "Пользователь уже существует" });
+        res.status(403).json({ message: "Пользователь уже существует" });
       }
       const hashPassword = await bcrypt.hash(password, 5);
-      const newUser = new User({
+      const newUser: any = await User.create({
         name: name,
         email: email,
         password: hashPassword,
@@ -30,10 +31,10 @@ class UserController {
       console.log(error);
     }
   }
-  async login(req, res) {
+  async login(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;
-      const findUser = await User.findOne({ where: { email: email } });
+      const findUser: any = await User.findOne({ where: { email: email } });
       if (!email) {
         res.json({ message: "Пользователь с таким email не найден" });
       }
@@ -47,7 +48,7 @@ class UserController {
       console.log(error);
     }
   }
-  async getAllUsers(req, res) {
+  async getAllUsers(req: Request, res: Response): Promise<void> {
     try {
       const users = await User.findAll();
       res.json({ data: users });
@@ -55,10 +56,10 @@ class UserController {
       console.log(error);
     }
   }
-  async getUser(req, res) {
+  async getUser(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
-      const user = await User.findOne({ where: { id: id } });
+      const user: any = await User.findOne({ where: { id: id } });
       if (!user) {
         res.json({ message: "Not Found User" });
       }
