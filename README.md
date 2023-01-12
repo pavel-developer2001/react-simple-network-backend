@@ -1,4 +1,4 @@
-# Бэкенд для SocialHub
+# Бэкенд для react-simple-network
 
 ## Версия 0.2.0
 
